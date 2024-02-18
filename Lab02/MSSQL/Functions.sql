@@ -1,0 +1,51 @@
+CREATE FUNCTION GET_FULL_AUTHOR_NAME (@AuthorID INT)
+RETURNS NVARCHAR(150)
+AS
+BEGIN
+    DECLARE @FullName NVARCHAR(150);
+
+    SELECT @FullName = CONCAT(FIRST_NAME, ' ', LAST_NAME, ' ', PATRONYMIC)
+    FROM AUTHOR
+    WHERE ID = @AuthorID;
+
+    IF @FullName IS NULL
+    BEGIN
+        SET @FullName = N'Автор не найден';
+    END
+
+    RETURN @FullName;
+END;
+
+
+CREATE FUNCTION GET_TOTAL_ORDERS_FOR_CUSTOMER (@CustomerID INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @TotalOrders INT;
+
+    SELECT @TotalOrders = COUNT(ID)
+    FROM BOOK_ORDER
+    WHERE CUSTOMER_ID = @CustomerID;
+
+    RETURN @TotalOrders;
+END;
+
+CREATE FUNCTION GET_GENRE_FOR_BOOK (@BookID INT)
+RETURNS NVARCHAR(50)
+AS
+BEGIN
+    DECLARE @Genre NVARCHAR(50);
+
+    SELECT @Genre = g.NAME
+    FROM BOOK b
+    INNER JOIN GENRE g ON b.GENRE_ID = g.ID
+    WHERE b.ID = @BookID;
+
+    IF @Genre IS NULL
+    BEGIN
+        SET @Genre = N'Жанр не указан';
+    END
+
+    RETURN @Genre;
+END;
+

@@ -1,0 +1,83 @@
+CREATE OR REPLACE FUNCTION GET_CUSTOMER_ORDERS(
+    CustomerID IN INT
+)
+    RETURN ORDER_TABLE
+AS
+    customer_count INT;
+    v_result       ORDER_TABLE := ORDER_TABLE();
+BEGIN
+
+    SELECT COUNT(*)
+    INTO customer_count
+    FROM CUSTOMER
+    WHERE ID = CustomerID;
+
+    IF customer_count = 0 THEN
+        RAISE_APPLICATION_ERROR(-20003, 'Клиент с указанным ID не существует.');
+    END IF;
+
+    SELECT ORDER_RECORD(ID, BOOK_ID, CUSTOMER_ID, BOOK_CHARACTERISTICS_ID, DATE_OF_ORDER, EDITION, TOTAL_PRICE, STATUS)
+    BULK COLLECT
+        INTO v_result
+    FROM BOOK_ORDER
+    WHERE CUSTOMER_ID = CustomerID;
+
+    RETURN v_result;
+END GET_CUSTOMER_ORDERS;
+
+CREATE OR REPLACE FUNCTION GET_FULL_AUTHOR_NAME (
+    AuthorID IN INT
+)
+RETURN NVARCHAR2
+AS
+    FullName NVARCHAR2(150);
+BEGIN
+    SELECT FIRST_NAME || ' ' || LAST_NAME || ' ' || PATRONYMIC
+    INTO FullName
+    FROM AUTHOR
+    WHERE ID = AuthorID;
+
+    IF FullName IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Автор с указанным ID не найден.');
+    END IF;
+
+    RETURN FullName;
+END GET_FULL_AUTHOR_NAME;
+
+
+CREATE OR REPLACE FUNCTION GET_TOTAL_ORDERS_FOR_CUSTOMER (
+    CustomerID IN INT
+)
+RETURN INT
+AS
+    TotalOrders INT;
+BEGIN
+    SELECT COUNT(ID)
+    INTO TotalOrders
+    FROM BOOK_ORDER
+    WHERE CUSTOMER_ID = CustomerID;
+
+    RETURN TotalOrders;
+END GET_TOTAL_ORDERS_FOR_CUSTOMER;
+
+
+CREATE OR REPLACE FUNCTION GET_GENRE_FOR_BOOK (
+    BookID IN INT
+)
+RETURN NVARCHAR2
+AS
+    Genre NVARCHAR2(50);
+BEGIN
+    SELECT g.NAME
+    INTO Genre
+    FROM BOOK b
+    INNER JOIN GENRE g ON b.GENRE_ID = g.ID
+    WHERE b.ID = BookID;
+
+    IF Genre IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Жанр для указанной книги не найден.');
+    END IF;
+
+    RETURN Genre;
+END GET_GENRE_FOR_BOOK;
+
