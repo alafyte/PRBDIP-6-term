@@ -3,6 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/MSSQL/Functions.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/MSSQL/Indexes.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/MSSQL/Insert.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/MSSQL/Procedures.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/MSSQL/Tables.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/MSSQL/Views.sql" dialect="TSQL" />
