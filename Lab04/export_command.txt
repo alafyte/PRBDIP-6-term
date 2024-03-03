@@ -1,0 +1,4 @@
+ogr2ogr -overwrite -f MSSQLSpatial "MSSQL:server=DESKTOP-MFP40AR;database=Lab04;trusted_connection=yes" "C:\University\6_term\ПРБДИП\Lab04\ne_110m_land\ne_110m_land.shp"
+или установить плагин "Export to SQL Server" (Plugins -> Manage and Install Plugins)
+
+Для Oracle: через DB Manager (Database -> DB Manager -> Oracle Spatial --- Import Layer/File)
