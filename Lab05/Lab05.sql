@@ -44,53 +44,36 @@ VALUES (N'Партия', 5, 1949, 1);
 
 -- Вычисление итогов выпуска продукции определенного направления помесячно, за квартал, за полгода, за год.
 
-SELECT
-    Year,
-    Quarter,
-    Half_Year,
-    Month,
-    SUM(Total_Orders) OVER (PARTITION BY Year, Quarter) AS Total_Orders_Quarter,
-    SUM(Total_Orders) OVER (PARTITION BY Year, Half_Year) AS Total_Orders_Half_Year,
-    SUM(Total_Orders) OVER (PARTITION BY Year) AS Total_Orders_Year
-FROM (
-    SELECT
-        YEAR(bo.DATE_OF_ORDER) AS Year,
-        CASE
-            WHEN MONTH(bo.DATE_OF_ORDER) <= 3 THEN 'Q1'
-            WHEN MONTH(bo.DATE_OF_ORDER) <= 6 THEN 'Q2'
-            WHEN MONTH(bo.DATE_OF_ORDER) <= 9 THEN 'Q3'
-            ELSE 'Q4'
-        END AS Quarter,
-        CASE
-            WHEN MONTH(bo.DATE_OF_ORDER) <= 6 THEN 'H1'
-            ELSE 'H2'
-        END AS Half_Year,
-        MONTH(bo.DATE_OF_ORDER) AS Month,
-        COUNT(bo.ID) AS Total_Orders
-    FROM
-        BOOK_ORDER bo
-    WHERE
-        bo.STATUS = N'Готов'
-    GROUP BY
-        YEAR(bo.DATE_OF_ORDER),
-        CASE
-            WHEN MONTH(bo.DATE_OF_ORDER) <= 3 THEN 'Q1'
-            WHEN MONTH(bo.DATE_OF_ORDER) <= 6 THEN 'Q2'
-            WHEN MONTH(bo.DATE_OF_ORDER) <= 9 THEN 'Q3'
-            ELSE 'Q4'
-        END,
-        CASE
-            WHEN MONTH(bo.DATE_OF_ORDER) <= 6 THEN 'H1'
-            ELSE 'H2'
-        END,
-        MONTH(bo.DATE_OF_ORDER)
-) AS Orders
-ORDER BY
-    Year,
-    Quarter,
-    Half_Year,
-    Month;
-
+SELECT DISTINCT YEAR(DATE_OF_ORDER)                                         AS YEAR,
+                CASE WHEN MONTH(DATE_OF_ORDER) <= 6 THEN 'H1' ELSE 'H2' END AS HALF_YEAR,
+                CASE
+                    WHEN MONTH(DATE_OF_ORDER) <= 3
+                        THEN 'Q1'
+                    WHEN MONTH(DATE_OF_ORDER) <= 6
+                        THEN 'Q2'
+                    WHEN MONTH(DATE_OF_ORDER) <= 9
+                        THEN 'Q3'
+                    ELSE 'Q4'
+                    END                                                     AS QUARTER,
+                MONTH(DATE_OF_ORDER)                                        AS MONTH,
+                SUM(EDITION) OVER (PARTITION BY MONTH(DATE_OF_ORDER))       AS MONTH_TOTAL,
+                SUM(EDITION) OVER (PARTITION BY YEAR(DATE_OF_ORDER),
+                    CASE
+                        WHEN MONTH(DATE_OF_ORDER) <= 3
+                            THEN 1
+                        WHEN MONTH(DATE_OF_ORDER) <= 6
+                            THEN 2
+                        WHEN MONTH(DATE_OF_ORDER) <= 9
+                            THEN 3
+                        ELSE 4
+                        END)                                                AS QUARTER_TOTAL,
+                SUM(EDITION) OVER (PARTITION BY YEAR(DATE_OF_ORDER),
+                    CASE
+                        WHEN MONTH(DATE_OF_ORDER) <= 6 THEN 1
+                        ELSE 2 END)                                         AS HALF_YEAR_TOTAL,
+                SUM(EDITION) OVER (PARTITION BY YEAR(DATE_OF_ORDER) )       AS YEAR_TOTAL
+FROM BOOK_ORDER
+ORDER BY YEAR, MONTH(DATE_OF_ORDER);
 
 
 -- Вычисление итогов выпуска продукции определенного направления за определенный период:
@@ -98,49 +81,19 @@ ORDER BY
 -- •	сравнение с общим объемом выпуска (в %);
 -- •	сравнение с пиковыми значениями объема выпуска (в %).
 
-DECLARE @TotalBooksProduced INT;
-DECLARE @TotalBooksSold INT;
-DECLARE @ProductionPercentage DECIMAL(5, 2);
-DECLARE @PeakProductionPercentage DECIMAL(5, 2);
+SELECT YEAR(DATE_OF_ORDER)                             AS YEAR,
+       TOTAL_BY_YEAR,
+       PEAK_IN_YEAR,
+       EDITION,
+       FORMAT(EDITION * 100.0 / TOTAL_BY_YEAR, '0.##') AS PERCENT_OF_TOTAL,
+       FORMAT(EDITION * 100.0 / PEAK_IN_YEAR, '0.##')  AS PERCENT_OF_PEAK
+FROM (SELECT EDITION,
+             DATE_OF_ORDER,
+             MAX(EDITION) OVER (PARTITION BY YEAR(DATE_OF_ORDER)) AS PEAK_IN_YEAR,
+             SUM(EDITION) OVER (PARTITION BY YEAR(DATE_OF_ORDER)) AS TOTAL_BY_YEAR
+      FROM BOOK_ORDER
+      WHERE YEAR(DATE_OF_ORDER) = 2023) AS SubQuery;
 
-WITH TotalBooks AS (
-    SELECT
-        COUNT(*) AS Total
-    FROM
-        BOOK_ORDER
-),
-YearStats AS (
-    SELECT
-        YEAR(DATE_OF_ORDER) AS OrderYear,
-        COUNT(*) * 1.0 / (SELECT Total FROM TotalBooks) * 100 AS YearPercentage,
-        COUNT(*) AS TotalBooksSold
-    FROM
-        BOOK_ORDER bo
-    GROUP BY
-        YEAR(DATE_OF_ORDER)
-)
-SELECT
-    @TotalBooksProduced = SUM(CASE WHEN OrderYear = 2023 THEN TotalBooksSold ELSE 0 END),
-    @TotalBooksSold = SUM(TotalBooksSold),
-    @PeakProductionPercentage = MAX(YearPercentage)
-FROM
-    YearStats;
-
-
-SET @ProductionPercentage = (@TotalBooksProduced * 1.0 / @TotalBooksSold) * 100;
-
-PRINT N'Книг издано за 2023: ' + CAST(@TotalBooksProduced AS VARCHAR);
-PRINT N'Всего книг издано: ' + CAST(@TotalBooksSold AS VARCHAR);
-PRINT N'Процент от общего выпуска: ' + CAST(@ProductionPercentage AS VARCHAR) + '%';
-PRINT N'Пиковый процент выпуска: ' + CAST(@PeakProductionPercentage AS VARCHAR) + '%';
-
-IF @ProductionPercentage > @PeakProductionPercentage
-    PRINT N'Продано больше пикового';
-ELSE
-    IF @ProductionPercentage < @PeakProductionPercentage
-        PRINT N'Продано меньше пикового';
-    ELSE
-        PRINT N'Продажи на пике';
 
 -- 5.	Продемонстрируйте применение функции ранжирования ROW_NUMBER() для разбиения результатов запроса на страницы (по 20 строк на каждую страницу).
 
@@ -174,7 +127,7 @@ WHERE RowNum > 1;
 -- Вернуть для каждого автора количество изданных книг за последние 6 месяцев помесячно.
 SELECT A.FIRST_NAME,
        A.LAST_NAME,
-       MONTH(BO.DATE_OF_ORDER) AS DATE_OF_PUBLISHING,
+       MONTH(BO.DATE_OF_ORDER) AS MONTH_OF_PUBLISHING,
        COUNT(*)         AS TOTAL_BOOKS_PUBLISHED
 FROM AUTHOR A
          JOIN
@@ -187,13 +140,12 @@ GROUP BY A.FIRST_NAME,
          BO.DATE_OF_ORDER
 ORDER BY A.LAST_NAME,
          A.FIRST_NAME,
-         DATE_OF_PUBLISHING;
+         MONTH_OF_PUBLISHING;
 
 -- Найдите при помощи аналитических функций: Какой жанр пользовался наибольшей популярностью для определенного автора? Вернуть для всех авторов.
 WITH AuthorGenreRank AS (SELECT A.FIRST_NAME,
                                 A.LAST_NAME,
                                 G.NAME                                                 AS GENRE,
-                                COUNT(*)                                               AS BOOK_COUNT,
                                 RANK() OVER (PARTITION BY A.ID ORDER BY COUNT(*) DESC) AS GENRE_RANK
                          FROM AUTHOR A
                                   JOIN
@@ -203,7 +155,6 @@ WITH AuthorGenreRank AS (SELECT A.FIRST_NAME,
                          GROUP BY A.ID, A.FIRST_NAME, A.LAST_NAME, G.NAME)
 SELECT FIRST_NAME,
        LAST_NAME,
-       GENRE,
-       BOOK_COUNT
+       GENRE
 FROM AuthorGenreRank
 WHERE GENRE_RANK = 1;
