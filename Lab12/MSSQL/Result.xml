@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+    <row>
+        <GeneratedXML>
+            <Report>
+                <Data>
+                    <Timestamp>2024-04-23T11:36:32.647</Timestamp>
+                    <Book>
+                        <BookName>Гарри Поттер и философский камень</BookName>
+                        <AuthorName>Джоан Роулинг</AuthorName>
+                        <Genre>Фантастика</Genre>
+                        <CoverType>Мягкая</CoverType>
+                        <PaperType>Офсетная</PaperType>
+                        <BindingType>Клеевое переплетение</BindingType>
+                        <NumberOfPages>300</NumberOfPages>
+                        <PaperSize>A5</PaperSize>
+                    </Book>
+                    <Book>
+                        <BookName>Преступление и наказание</BookName>
+                        <AuthorName>Федор Достоевский</AuthorName>
+                        <Genre>Роман</Genre>
+                        <CoverType>Твердая</CoverType>
+                        <PaperType>Мелованная</PaperType>
+                        <BindingType>Пружинный переплет</BindingType>
+                        <NumberOfPages>400</NumberOfPages>
+                        <PaperSize>B5</PaperSize>
+                    </Book>
+                    <Book>
+                        <BookName>Старик и море</BookName>
+                        <AuthorName>Эрнест Хемингуэй</AuthorName>
+                        <Genre>Приключения</Genre>
+                        <CoverType>Мягкая</CoverType>
+                        <PaperType>Офсетная</PaperType>
+                        <BindingType>Скрепление на клею</BindingType>
+                        <NumberOfPages>250</NumberOfPages>
+                        <PaperSize>A4</PaperSize>
+                    </Book>
+                    <Book>
+                        <BookName>Война и мир</BookName>
+                        <AuthorName>Лев Толстой</AuthorName>
+                        <Genre>Роман</Genre>
+                        <CoverType>Твердая</CoverType>
+                        <PaperType>Мелованная</PaperType>
+                        <BindingType>Твердый переплет</BindingType>
+                        <NumberOfPages>500</NumberOfPages>
+                        <PaperSize>A4</PaperSize>
+                    </Book>
+                    <Book>
+                        <BookName>1984</BookName>
+                        <AuthorName>Джордж Оруэлл</AuthorName>
+                        <Genre>Фантастика</Genre>
+                        <CoverType>Мягкая</CoverType>
+                        <PaperType>Офсетная</PaperType>
+                        <BindingType>Клеевое переплетение</BindingType>
+                        <NumberOfPages>350</NumberOfPages>
+                        <PaperSize>B6</PaperSize>
+                    </Book>
+                    <Customer>
+                        <CustomerFirstName>Иван</CustomerFirstName>
+                        <CustomerLastName>Иванов</CustomerLastName>
+                        <CustomerPatronymic>Иванович</CustomerPatronymic>
+                        <CustomerPhoneNumber>123-456-7890</CustomerPhoneNumber>
+                        <CustomerEmail>ivan@example.com</CustomerEmail>
+                        <CustomerType>Физическое лицо</CustomerType>
+                    </Customer>
+                    <Customer>
+                        <CustomerFirstName>Петр</CustomerFirstName>
+                        <CustomerLastName>Петров</CustomerLastName>
+                        <CustomerPatronymic>Петрович</CustomerPatronymic>
+                        <CustomerPhoneNumber>987-654-3210</CustomerPhoneNumber>
+                        <CustomerEmail>petr@example.com</CustomerEmail>
+                        <CustomerType>Физическое лицо</CustomerType>
+                    </Customer>
+                    <Customer>
+                        <CustomerFirstName>Анна</CustomerFirstName>
+                        <CustomerLastName>Иванова</CustomerLastName>
+                        <CustomerPatronymic>Петровна</CustomerPatronymic>
+                        <CustomerPhoneNumber>111-222-3333</CustomerPhoneNumber>
+                        <CustomerEmail>anna@example.com</CustomerEmail>
+                        <CustomerType>Юридическое лицо</CustomerType>
+                    </Customer>
+                    <Customer>
+                        <CustomerFirstName>Елена</CustomerFirstName>
+                        <CustomerLastName>Смирнова</CustomerLastName>
+                        <CustomerPatronymic>Ивановна</CustomerPatronymic>
+                        <CustomerPhoneNumber>444-555-6666</CustomerPhoneNumber>
+                        <CustomerEmail>elena@example.com</CustomerEmail>
+                        <CustomerType>Физическое лицо</CustomerType>
+                    </Customer>
+                    <Customer>
+                        <CustomerFirstName>Сергей</CustomerFirstName>
+                        <CustomerLastName>Козлов</CustomerLastName>
+                        <CustomerPatronymic>Александрович</CustomerPatronymic>
+                        <CustomerPhoneNumber>777-888-9999</CustomerPhoneNumber>
+                        <CustomerEmail>sergey@example.com</CustomerEmail>
+                        <CustomerType>Юридическое лицо</CustomerType>
+                    </Customer>
+                    <Order>
+                        <DateOfOrder>2023-01-19</DateOfOrder>
+                        <Edition>120</Edition>
+                        <TotalPrice>1500.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2024-01-20</DateOfOrder>
+                        <Edition>200</Edition>
+                        <TotalPrice>2500.00</TotalPrice>
+                        <Status>В работе</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2024-02-21</DateOfOrder>
+                        <Edition>150</Edition>
+                        <TotalPrice>1800.00</TotalPrice>
+                        <Status>Создан</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2024-02-10</DateOfOrder>
+                        <Edition>300</Edition>
+                        <TotalPrice>3500.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2024-03-02</DateOfOrder>
+                        <Edition>250</Edition>
+                        <TotalPrice>2800.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-01-05</DateOfOrder>
+                        <Edition>100</Edition>
+                        <TotalPrice>1500.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-02-10</DateOfOrder>
+                        <Edition>200</Edition>
+                        <TotalPrice>2500.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-03-15</DateOfOrder>
+                        <Edition>150</Edition>
+                        <TotalPrice>1800.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-04-20</DateOfOrder>
+                        <Edition>300</Edition>
+                        <TotalPrice>3500.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-05-25</DateOfOrder>
+                        <Edition>250</Edition>
+                        <TotalPrice>2800.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-06-30</DateOfOrder>
+                        <Edition>100</Edition>
+                        <TotalPrice>1500.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-07-05</DateOfOrder>
+                        <Edition>200</Edition>
+                        <TotalPrice>2500.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-08-10</DateOfOrder>
+                        <Edition>150</Edition>
+                        <TotalPrice>1800.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-09-15</DateOfOrder>
+                        <Edition>300</Edition>
+                        <TotalPrice>3500.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                    <Order>
+                        <DateOfOrder>2023-10-20</DateOfOrder>
+                        <Edition>250</Edition>
+                        <TotalPrice>2800.00</TotalPrice>
+                        <Status>Готов</Status>
+                    </Order>
+                </Data>
+            </Report>
+        </GeneratedXML>
+    </row>
+</data>
