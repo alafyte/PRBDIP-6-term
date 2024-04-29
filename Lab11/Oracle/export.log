@@ -1,0 +1,88 @@
+
+SQL*Loader: Release 19.0.0.0.0 - Production on Mon Apr 29 09:58:04 2024
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   control.ctl
+Character Set UTF8 specified for all input.
+
+Data File:      authors.txt
+  Bad File:     authors.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     250 rows, maximum of 1048576 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table AUTHOR_COPY, loaded from every logical record.
+Insert option in effect for this table: REPLACE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+ID                                  FIRST     *   ,       CHARACTER            
+FIRST_NAME                           NEXT   100   ,       CHARACTER            
+    SQL string for column : "UPPER(:FIRST_NAME)"
+LAST_NAME                            NEXT   100   ,       CHARACTER            
+    SQL string for column : "UPPER(:LAST_NAME)"
+PATRONYMIC                           NEXT   100   ,       CHARACTER            
+    SQL string for column : "UPPER(:PATRONYMIC)"
+COUNTRY                              NEXT   100   ,       CHARACTER            
+    SQL string for column : "UPPER(:COUNTRY)"
+
+Record 2: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+Record 4: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+Record 5: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+Record 6: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+Record 7: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+Record 9: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+Record 10: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+Record 11: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+Record 12: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+Record 13: Rejected - Error on table AUTHOR_COPY, column PATRONYMIC.
+ORA-01400: cannot insert NULL into ("EDITION_ADMIN"."AUTHOR_COPY"."PATRONYMIC")
+
+
+Table AUTHOR_COPY:
+  5 Rows successfully loaded.
+  10 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 166500 bytes(250 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:            15
+Total logical records rejected:        10
+Total logical records discarded:        0
+
+Run began on Mon Apr 29 09:58:04 2024
+Run ended on Mon Apr 29 09:59:44 2024
+
+Elapsed time was:     00:01:39.59
+CPU time was:         00:00:00.12

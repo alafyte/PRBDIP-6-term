@@ -1,0 +1,7 @@
+database_name -> Tasks -> Import Data -> Microsoft OLE DB Driver for SQL Server -> Properties
+-> localhost, Windows Authentication, Trust Server Certificate, database: EDITION -> 
+Microsoft OLE DB Driver for SQL Server -> аналогично, но database: EDITION_COPY -> 
+Write a query to specify the data to transfer -> 
+SELECT *
+FROM GET_AUTHORS_AND_BOOKS(1940, 1955);
+-> Next -> Run immediately -> Finish
