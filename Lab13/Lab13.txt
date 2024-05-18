@@ -1,0 +1,60 @@
+-- Создать базу данных по своему варианту.
+use lab13;
+
+-- Создать коллекции по варианту. Добавить данные в коллекции. Изменить и обновить несколько элементов коллекций.
+db.createCollection("books");
+db.createCollection("authors");   
+db.books.insertMany([
+     { title: "Book 1", author: "Author 1", tags: ["fiction", "mystery"], price: 20 },
+     { title: "Book 2", author: "Author 2", tags: ["sci-fi"], price: 25 },
+     { title: "Book 3", author: "Author 1", tags: ["fantasy"], price: 18 }
+   ]);
+
+db.authors.insertMany([
+     { name: "Author 1", country: "Country A" },
+     { name: "Author 2", country: "Country B" }
+   ]);
+db.books.updateOne({ title: "Book 1" }, { $set: { price: 22 } });
+db.authors.updateMany({ country: "Country A" }, { $set: { country: "New Country A" } });
+
+-- Произвести выборку элементов, используя условные операции, операторы работы с массивами, операторы $exists, $type, $regex.
+db.books.find({ price: { $gt: 20 }});
+db.books.find({ tags: { $in: ["sci-fi", "fantasy"] } });
+db.books.find({ tags: { $exists: true }, price: { $type: "number" }, title: { $regex: /Book/ } });
+
+-- Произвести выборку элементов в своей базе данных, используя проекции.
+db.authors.find({}, { name: 1, _id: 0 });
+
+-- С помощью функции count() получить число всех элементов любой коллекции, а также число элементов с заданным фильтром.
+db.books.count();
+db.books.count({ author: "Author 1" });
+
+-- Продемонстрировать использование методов limit() и skip().
+db.books.find().limit(2);
+db.books.find().skip(1);
+
+-- Создать запросы с функцией distinct().
+db.books.distinct("author");
+
+
+-- Используя метод aggregate(), продемонстрировать работу агрегатных операций. 
+db.books.aggregate([
+     { $group: { _id: "$author", totalBooks: { $sum: 1 } } },
+     { $sort: { totalBooks: -1 } }
+   ]);
+
+-- Продемонстрировать использование пустого и непустого фильтра в секции match, группировку по нескольким ключам.
+db.books.aggregate([
+      {
+        $match: {
+          tags: { $exists: true }
+        }
+      },
+      {
+        $group: {
+          _id: { author: "$author", tagCount: { $size: "$tags" } },
+          totalBooks: { $sum: 1 }
+        }
+      }
+    ]);
+
